@@ -1,0 +1,89 @@
+.discussion-detail-page { background: var(--bg-primary); }
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(10, 10, 26, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.discussion-post {
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.comment-input-area {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.comments-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-thread {
+  animation: fade-in 0.2s ease;
+}
+
+.comment-node {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 4px;
+}
+
+.depth-1 { margin-left: 20px; }
+.depth-2 { margin-left: 40px; }
+.depth-3 { margin-left: 60px; }
+.depth-4 { margin-left: 72px; }
+
+.comment-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 30px;
+}
+.vote-score {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Orbitron', monospace;
+  color: var(--text-secondary);
+}
+.vote-score.positive { color: var(--neon-green); }
+.vote-score.negative { color: var(--neon-pink); }
+
+.comment-content { flex: 1; min-width: 0; }
+.comment-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.comment-text { font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; word-break: break-word; }
+.comment-actions { display: flex; gap: 8px; margin-top: 6px; }
+.comment-action-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: 'Exo 2', sans-serif;
+  padding: 2px 4px;
+  transition: color var(--transition-fast);
+}
+.comment-action-btn:hover { color: var(--neon-cyan); }
+
+.reply-input { display: flex; gap: 6px; margin-top: 8px; }
+
+.vote-btn { background: transparent; border: none; cursor: pointer; font-size: 0.8rem; color: var(--text-muted); padding: 1px; transition: color var(--transition-fast); line-height: 1; }
+.vote-btn.up.active, .vote-btn.up:hover { color: var(--neon-green); }
+.vote-btn.down.active, .vote-btn.down:hover { color: var(--neon-pink); }

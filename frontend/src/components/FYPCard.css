@@ -1,0 +1,192 @@
+.fyp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: border-color var(--transition-fast);
+}
+.fyp-card:hover { border-color: var(--border-bright); }
+
+.fyp-card-ad {
+  border-color: var(--neon-gold);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+}
+
+.ad-badge {
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--neon-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  text-align: center;
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.1em;
+}
+
+/* ── Media ── */
+.fyp-media {
+  position: relative;
+  background: #000;
+}
+
+.fyp-video, .fyp-image {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Overlay Actions ── */
+.fyp-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.action-btn {
+  background: rgba(10, 10, 26, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  min-width: 48px;
+  transition: all var(--transition-fast);
+  gap: 2px;
+}
+
+.action-btn:hover {
+  border-color: var(--neon-cyan);
+  transform: scale(1.1);
+}
+
+.action-btn.active-like {
+  background: rgba(255, 0, 100, 0.2);
+  border-color: #ff0064;
+  box-shadow: 0 0 10px rgba(255, 0, 100, 0.3);
+}
+
+.action-btn.active-super-like {
+  background: rgba(0, 238, 255, 0.2);
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.action-btn.active-comment {
+  background: rgba(191, 0, 255, 0.2);
+  border-color: var(--neon-purple);
+}
+
+.action-icon { font-size: 1.4rem; line-height: 1; }
+.action-count { font-size: 0.7rem; font-weight: 700; font-family: 'Orbitron', monospace; }
+
+/* ── Reactions Panel ── */
+.reactions-panel {
+  position: absolute;
+  right: 72px;
+  bottom: 12px;
+  background: rgba(10, 10, 26, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.reaction-pill {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+.reaction-pill:hover, .reaction-pill.active {
+  background: rgba(0, 238, 255, 0.1);
+  border-color: var(--neon-cyan);
+  transform: scale(1.2);
+}
+
+/* ── Info ── */
+.fyp-info {
+  padding: 12px 16px;
+}
+
+.fyp-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.username {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.user-hashtag {
+  font-size: 0.8rem;
+}
+
+.fyp-caption {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.fyp-hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fyp-hashtags .hashtag {
+  font-size: 0.8rem;
+  background: rgba(0, 238, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 238, 255, 0.2);
+}
+
+/* ── Comments ── */
+.comments-section {
+  border-top: 1px solid var(--border);
+  padding: 12px 16px;
+  background: var(--bg-primary);
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 8px;
+}
