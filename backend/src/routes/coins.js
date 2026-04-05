@@ -63,8 +63,13 @@ router.post('/advertise', authMiddleware, upload.single('media'), (req, res) => 
   }
 
   const amount = parseInt(coins_amount);
-  const balance = db.prepare(`SELECT ${coin_type} as bal FROM coin_balances WHERE user_id=?`).get(req.user.user_id);
-  if (!balance || balance.bal < amount) {
+
+  // Explicit column mapping to prevent SQL injection
+  const COIN_COLUMN = { silver: 'silver', gold: 'gold' };
+  const col = COIN_COLUMN[coin_type];
+
+  const balance = db.prepare('SELECT bronze, silver, gold FROM coin_balances WHERE user_id=?').get(req.user.user_id);
+  if (!balance || balance[col] < amount) {
     return res.status(402).json({ error: `Insufficient ${coin_type} coins` });
   }
 
@@ -75,7 +80,11 @@ router.post('/advertise', authMiddleware, upload.single('media'), (req, res) => 
   db.prepare(`INSERT INTO advertisements (ad_id, user_id, title, content, media_url, target_url, feed_type, coin_type, coins_spent, expires_at)
     VALUES (?,?,?,?,?,?,?,?,?,?)`).run(ad_id, req.user.user_id, title, content, media_url, target_url, feed_type, coin_type, amount, expires_at);
 
-  db.prepare(`UPDATE coin_balances SET ${coin_type}=${coin_type}-? WHERE user_id=?`).run(amount, req.user.user_id);
+  if (col === 'silver') {
+    db.prepare('UPDATE coin_balances SET silver=silver-? WHERE user_id=?').run(amount, req.user.user_id);
+  } else {
+    db.prepare('UPDATE coin_balances SET gold=gold-? WHERE user_id=?').run(amount, req.user.user_id);
+  }
   db.prepare("INSERT INTO coin_transactions (user_id, coin_type, amount, reason, reference_id) VALUES (?,?,?,?,?)").run(req.user.user_id, coin_type, -amount, 'Advertisement', ad_id);
 
   res.status(201).json({ ad_id, coin_type, coins_spent: amount, expires_at });

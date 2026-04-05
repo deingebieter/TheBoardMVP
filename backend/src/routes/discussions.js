@@ -9,10 +9,13 @@ router.get('/', optionalAuth, (req, res) => {
   const { sort = 'new', page = 1, limit = 20 } = req.query;
   const offset = (page - 1) * limit;
 
-  let orderBy;
-  if (sort === 'top') orderBy = '(d.upvote_count - d.downvote_count) DESC';
-  else if (sort === 'controversial') orderBy = '(d.upvote_count + d.downvote_count) DESC';
-  else orderBy = 'd.created_at DESC';
+  // Explicit whitelist for ORDER BY to prevent SQL injection
+  const ORDER_BY_MAP = {
+    top: '(d.upvote_count - d.downvote_count) DESC',
+    controversial: '(d.upvote_count + d.downvote_count) DESC',
+    new: 'd.created_at DESC',
+  };
+  const orderBy = ORDER_BY_MAP[sort] || ORDER_BY_MAP.new;
 
   const discussions = db.prepare(`
     SELECT d.*, u.username, u.display_name, u.profile_image
@@ -101,11 +104,14 @@ router.post('/:discussion_id/vote', authMiddleware, (req, res) => {
 router.get('/:discussion_id/comments', optionalAuth, (req, res) => {
   const { sort = 'top' } = req.query;
 
-  let orderBy;
-  if (sort === 'top') orderBy = '(c.upvote_count - c.downvote_count) DESC';
-  else if (sort === 'new') orderBy = 'c.created_at DESC';
-  else if (sort === 'controversial') orderBy = '(c.upvote_count + c.downvote_count) DESC';
-  else orderBy = 'c.created_at ASC';
+  // Explicit whitelist for ORDER BY to prevent SQL injection
+  const ORDER_BY_MAP = {
+    top: '(c.upvote_count - c.downvote_count) DESC',
+    new: 'c.created_at DESC',
+    controversial: '(c.upvote_count + c.downvote_count) DESC',
+    old: 'c.created_at ASC',
+  };
+  const orderBy = ORDER_BY_MAP[sort] || ORDER_BY_MAP.top;
 
   const comments = db.prepare(`
     SELECT c.*, u.username, u.display_name, u.profile_image

@@ -2,15 +2,19 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const db = require('../database/db');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'theboard_secret';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
 
 function generateUserId() {
-  const len = 7 + Math.floor(Math.random() * 3); // 7-9 digits
+  // Use cryptographically secure random for user IDs
+  const len = 7 + (crypto.randomInt(3)); // 7-9 digits
   let id = '';
-  for (let i = 0; i < len; i++) id += Math.floor(Math.random() * 10);
+  for (let i = 0; i < len; i++) id += crypto.randomInt(10);
   return id;
 }
 
